@@ -809,6 +809,11 @@ function hyperlinkClick(element, text, axn) {
 }
 
 function nukeHyperlinks() {
+  var hypies = document.getElementsByTagName("A");
+  for (var h = 0; h < hypies.length; h++) {
+    hypies[h].style.textDecoration = "line-through";
+    hypies[h].style.color = "#007d91";
+  }
   var uno = document.getElementsByTagName("a");
   var dos = uno.length;
   for (var i = 0; i < dos; i++) {
