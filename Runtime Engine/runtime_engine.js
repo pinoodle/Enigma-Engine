@@ -83,8 +83,8 @@ function onGameLoad() {
     game_btn.addEventListener("click", function() {switchView("game")});
   }
   else {
-    document.getElementById("container").style.width = "calc(50% + 4px)";
-    document.getElementById("container").style.left = "calc(50% - 4px)";
+    document.getElementById("container").style.width = "calc(40% + 4px)";
+    document.getElementById("container").style.left = "calc(65% - 4px)";
     var newPanel = document.createElement("DIV");
     newPanel.id = "newPanel";
     document.body.appendChild(newPanel);
