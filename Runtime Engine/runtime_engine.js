@@ -2,6 +2,7 @@ var header = function() {
 
 };
 
+var ctrl = 0;
 var timer;
 var audio;
 var music;
@@ -275,6 +276,86 @@ function onGameLoad() {
   // Other code to be executed at the start below...
   header();
   try { definitions[room](); } catch(error) { print(error); }
+
+  // KEYBOARD
+
+  var keys = [];
+
+  document.addEventListener("keypress", function(event) {
+    if (event.key === "w") {
+      if (keys.indexOf("w") === -1) keys.push("w");
+    }
+    if (event.key === "a") {
+      if (keys.indexOf("a") === -1) keys.push("a");
+    }
+    if (event.key === "s") {
+      if (keys.indexOf("s") === -1) keys.push("s");
+    }
+    if (event.key === "d") {
+      if (keys.indexOf("d") === -1) keys.push("d");
+    }
+    if (event.key === " ") {
+      if (keys.indexOf("space") === -1) keys.push("space");
+    }
+  });
+
+  document.addEventListener("keyup", function(event) {
+
+    // WASD SUPPORT
+    if (event.key === "w" || event.key === "a" || event.key === "s" || event.key === "d" || event.key === " ") {
+      if (keys.length === 2) {
+        if (keys.indexOf("space") === -1) {
+          if (keys.indexOf("w") !== -1 && keys.indexOf("d") !== -1) document.getElementById("northeast").click();
+          if (keys.indexOf("w") !== -1 && keys.indexOf("a") !== -1) document.getElementById("northwest").click();
+          if (keys.indexOf("s") !== -1 && keys.indexOf("d") !== -1) document.getElementById("southeast").click();
+          if (keys.indexOf("s") !== -1 && keys.indexOf("a") !== -1) document.getElementById("southwest").click();
+          dom_scene.click();
+        }
+        else {
+          if (keys.indexOf("w") !== -1) document.getElementById("up").click();
+          if (keys.indexOf("s") !== -1) document.getElementById("down").click();
+          dom_scene.click();
+        }
+      }
+      else if (keys.length === 1) {
+        if (keys.indexOf("space") === -1) {
+          if (keys.indexOf("w") !== -1) document.getElementById("north").click();
+          if (keys.indexOf("s") !== -1) document.getElementById("south").click();
+          if (keys.indexOf("d") !== -1) document.getElementById("east").click();
+          if (keys.indexOf("a") !== -1) document.getElementById("west").click();
+          dom_scene.click();
+        }
+        else {
+          if (document.getElementById("game_btn").classList.contains("active_bottom_btn")) document.getElementById("map_btn").click();
+          else if (document.getElementById("map_btn").classList.contains("active_bottom_btn")) document.getElementById("stats_btn").click();
+          else if (document.getElementById("stats_btn").classList.contains("active_bottom_btn")) document.getElementById("settings_btn").click();
+          else if (document.getElementById("settings_btn").classList.contains("active_bottom_btn")) {
+            if (ornt === "landscape") document.getElementById("map_btn").click();
+            else document.getElementById("game_btn").click();
+          }
+        }
+
+      }
+      keys = [];
+    }
+
+    // ROOM AND INVENTORY
+    else if (event.key === "Shift") {
+      if (document.getElementById("stats_btn").classList.contains("active_bottom_btn") || document.getElementById("settings_btn").classList.contains("active_bottom_btn")) dom_scene.click();
+      document.getElementById("surroundings_btn").click();
+    }
+
+    else if (event.key === "Control") {
+      if (ctrl > 0) {
+        if (document.getElementById("stats_btn").classList.contains("active_bottom_btn") || document.getElementById("settings_btn").classList.contains("active_bottom_btn")) dom_scene.click();
+        document.getElementById("inventory_btn").click();
+      }
+    }
+
+  });
+
+  var ctrlFix = setTimeout(function() { ctrl++; }, 1000);
+
 };
 
 // Function to draw a map square. It takes in the player's current position and draws a square on it
