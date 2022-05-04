@@ -1,5 +1,5 @@
 var textEditor;
-var fontSize = 1.5;
+var fontSize = 1.2;
 var converter = new showdown.Converter({ noHeaderId : true, simpleLineBreaks : true, backslashEscapesHTMLTags : true, literalMidWordUnderscores : true });
 var ಠ_ಠ = 0;
 var gridSize = 1001;
@@ -29,19 +29,16 @@ window.onload = function() {
   if (localStorage.advancedUser === 'true') roomScripts = {'0,0,0' : "roomName(`Start<br>Screen`);\n\n"};
 
   // Create a JavaScript code editor
-  textEditor = CodeMirror($('#codeEditor')[0], {
-    lineNumbers: true,
-    value: '',
-    theme: 'abcdef',
-    tabSize: 4,
-    indentUnit: 4
-  });
-  textEditor.setSize(null, 'calc(100% - 28px - 16px - 16px)');
+  textEditor = ace.edit("codeEditor");
+  textEditor.setTheme("ace/theme/merbivore");
+  var JavaScriptMode = ace.require("ace/mode/javascript").Mode;
+  textEditor.session.setMode(new JavaScriptMode());
+  textEditor.setShowPrintMargin(false);
 
   // Create tabs
   $('#tabs').tabs({
     heightStyle: 'fill',
-    activate: function(event, ui) { if (room === 'Variables') textEditor.setOption('mode','javascript'); else textEditor.setOption('mode','javascript'); textEditor.refresh(); },
+    activate: function(event, ui) { },
     beforeActivate: function(event, ui) {
       roomScripts[room] = textEditor.getValue();
       if (room !== 'Variables') redrawMap();
@@ -188,8 +185,8 @@ window.onload = function() {
   $('#addAction').click(function(){ destroyMenus(); $('#actionMenu').css({ 'display' : 'block' }); $(this).addClass('ui-state-active'); });
   $('#editAction').click(function() {
     destroyMenus();
-    lineNo = textEditor.getCursor().line;
-    var command = textEditor.getLine(lineNo).trim();
+    lineNo = textEditor.selection.getCursor().row;
+    var command = textEditor.session.getLine(lineNo).trim();
     if (command.indexOf('print("') === 0 || command.indexOf('print(`') === 0 || command.indexOf("print('") === 0) {
       command = command.replace('print(','');
       var quoteUsed = command.substr(0, 1);
@@ -207,9 +204,10 @@ window.onload = function() {
     }
     else { alert('No PRINT command found on the currently selected line!'); return }
   });
-  $('.CodeMirror').click(function() { destroyMenus(); });
-  $('#zoomIn').click(function() { destroyMenus(); fontSize = fontSize + 0.1; $('.CodeMirror, textarea').css({ 'fontSize': fontSize + 'em' }); textEditor.refresh(); });
-  $('#zoomOut').click(function() { destroyMenus(); fontSize = fontSize - 0.1; $('.CodeMirror, textarea').css({ 'fontSize': fontSize + 'em' }); textEditor.refresh(); });
+
+  $('#codeEditor').click(function() { destroyMenus(); });
+  $('#zoomIn').click(function() { destroyMenus(); fontSize = fontSize + 0.1; $('#codeEditor').css({ 'fontSize': fontSize + 'em' }); });
+  $('#zoomOut').click(function() { destroyMenus(); fontSize = fontSize - 0.1; $('#codeEditor').css({ 'fontSize': fontSize + 'em' }); });
   $('#checkSyntax').click(function() { destroyMenus(); try { esprima.parseScript(textEditor.getValue()); alert("No syntax errors found!\nThat doesn't necessarily mean there are none, however - we just couldn't find any."); } catch(error) { alert(error); } });
   $('#zoomInButton').click(function() { mapScaler+=0.2; $('#paper').css({ 'transform' : 'scale(' + mapScaler + ')' }); });
   $('#zoomOutButton').click(function() { mapScaler-=0.2; $('#paper').css({ 'transform' : 'scale(' + mapScaler + ')' }); });
@@ -227,8 +225,8 @@ window.onload = function() {
           zStorage = room.split(',')[2];
           room = 'Variables';
           $('.roomSelection').html('Selected room: (Variables)');
-          if (typeof roomScripts[room] !== 'undefined') { textEditor.setValue(roomScripts[room]); }
-          else { textEditor.setValue(''); }
+          if (typeof roomScripts[room] !== 'undefined') { textEditor.session.setValue(roomScripts[room]); textEditor.renderer.updateFull(); }
+          else { textEditor.session.setValue(''); textEditor.renderer.updateFull(); }
           redrawMap();
         }
       }
@@ -248,9 +246,6 @@ window.onload = function() {
     $('#goToDialog').dialog('open');
   });
 
-  // Other random things...
-  $('.CodeMirror, textarea').css({ 'font-size': fontSize + 'em' });
-
   // This MUST stay at the very bottom of this function!!!
   $('#paper').css({ 'width' : (gridSize * 64) + 'px', 'height' : (gridSize * 64) + 'px', 'top' : 'calc(' + (-gridSize * 32) + 'px + 50%)', 'left' : 'calc(' + (-gridSize * 32) + 'px + 50%)' });
   $('#paper').draggable();
@@ -260,8 +255,8 @@ window.onload = function() {
     $('.roomSelection').html('Selected room: (' + room + ')');
     $('.square').removeClass('glowing');
     $(this).addClass('glowing');
-    if (typeof roomScripts[room] !== 'undefined') { textEditor.setValue(roomScripts[room]); }
-    else { textEditor.setValue(''); }
+    if (typeof roomScripts[room] !== 'undefined') { textEditor.session.setValue(roomScripts[room]); textEditor.renderer.updateFull(); }
+    else { textEditor.session.setValue(''); textEditor.renderer.updateFull(); }
   });
   $('#tabs').tabs('refresh');
   if (typeof sessionStorage.json !== 'undefined') {
@@ -275,24 +270,19 @@ window.onload = function() {
   $('.expression').prop('title','EXPRESSION: This text box accepts pure JavaScript. You may therefore enter here numbers (e.g. 5), variables (e.g. pl.name), text (e.g. "Steve" - note the quotes!), or combine any of these using mathematical operators such as +, -, * or /');
   $('.varName').prop('title','VARIABLE NAME: Variable names MUST NOT contain spaces. They must also start with a letter, the $ character or the _ character and must only contain letters, numbers, $ and _');
   $('#loadingMask')[0].style.display = 'none';
-  textEditor.setSelection({ line: 8, ch: 0 });
+  textEditor.gotoLine(3);
+  $('#ui-id-2').click(function() { textEditor.renderer.updateFull(); });
 }
 
 // Change map layer
 function changeLayer(number) {
-  /*if (room !== 'Variables') zStorage = room.split(',')[2];
-  room = 'Variables';
-  $('.roomSelection').html('Selected room: (' + room + ')');
-  $('#notes').addClass('glowing');
-  if (typeof roomScripts[room] !== 'undefined') { textEditor.setValue(roomScripts[room]); }
-  else { textEditor.setValue(''); }*/
   $('#notes').click();
   zStorage = (parseInt(zStorage) + number) + '';
   redrawMap();
 }
 
 // Refresh tabs on window resize
-window.addEventListener('resize', function(){ $('#tabs').tabs('refresh'); textEditor.refresh(); }, true);
+window.addEventListener('resize', function(){ $('#tabs').tabs('refresh'); }, true);
 
 // Function to destroy all menus
 function destroyMenus() {
@@ -302,8 +292,8 @@ function destroyMenus() {
 
 // Functions to be added to the text editor...
 function addToEditor(string) {
-  textEditor.replaceSelection(string);
-  textEditor.execCommand('indentAuto');
+  textEditor.insert(string);
+  textEditor.indent();
 }
 function washUserInput(element, liquifyQuotes) {
   var dummy = $(element)[0].value.trim().replace(/\n/g, '<br>');
@@ -336,10 +326,9 @@ function print_carryOn() {
   var command = "print(" + washUserInput('#printTextarea', false) + ");";
   if (comingFromEdit === false) addToEditor(command);
   else {
-    var string = textEditor.getLine(lineNo);
+    var string = textEditor.session.getLine(lineNo);
     var index = string.indexOf('print');
-    textEditor.setSelection({ line: lineNo, ch: index }, { line: lineNo, ch: string.length });
-    addToEditor(command);
+    textEditor.session.replace(new ace.Range(lineNo, index, lineNo, index + string.length), command);
   }
 }
 function hyperlink() {
@@ -667,8 +656,8 @@ function redrawMap() {
     $('.square').removeClass('glowing');
     $('#notes').removeClass('glowing');
     $(this).addClass('glowing');
-    if (typeof roomScripts[room] !== 'undefined') { textEditor.setValue(roomScripts[room]); }
-    else { textEditor.setValue(''); }
+    if (typeof roomScripts[room] !== 'undefined') { textEditor.session.setValue(roomScripts[room]); textEditor.renderer.updateFull(); }
+    else { textEditor.session.setValue(''); textEditor.renderer.updateFull(); }
   });
   if (room !== 'Variables') document.getElementById('square(' + room + ')').classList.add('glowing');
   else document.getElementById('notes').classList.add('glowing');
