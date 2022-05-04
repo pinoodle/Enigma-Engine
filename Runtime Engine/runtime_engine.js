@@ -891,15 +891,23 @@ function hyperlinkClick(element, text, axn) {
 }
 
 function nukeHyperlinks() {
-  var hypies = document.getElementsByTagName("A");
-  for (var h = 0; h < hypies.length; h++) {
-    hypies[h].style.textDecoration = "line-through";
-    hypies[h].style.color = "#007d91";
-  }
-  var uno = document.getElementsByTagName("a");
+  var uno = document.getElementsByTagName("A");
   var dos = uno.length;
   for (var i = 0; i < dos; i++) {
     uno[i].classList.remove("activeHyperlink");
+    uno[i].style.textDecoration = "line-through";
+    uno[i].style.color = "#007d91";
+  }
+}
+
+function killHyperlink(txt) {
+  var hypies = document.getElementsByTagName("A");
+  for (var h = 0; h < hypies.length; h++) {
+    if (hypies[h].innerHTML === txt) {
+      hypies[h].classList.remove("activeHyperlink");
+      hypies[h].style.textDecoration = "line-through";
+      hypies[h].style.color = "#007d91";
+    }
   }
 }
 
