@@ -67,6 +67,12 @@ window.onload = function() {
     buttons: [{ text: "OK", click: function() { hyperlink_carryOn(); $(this).dialog('close'); } }],
     width: 800
   });
+  $('#killHyperlinkDialog').dialog({
+    appendTo: '#tabs-2',
+    autoOpen : false,
+    buttons: [{ text: "OK", click: function() { killHyperlink_carryOn(); $(this).dialog('close'); } }],
+    width: 800
+  });
   $('#imageDialog').dialog({
     appendTo: '#tabs-2',
     autoOpen : false,
@@ -341,6 +347,11 @@ function hyperlink() {
   $('#hyperlinkDialog').dialog('open');
   $('#hyperlinkInput')[0].value = "";
 }
+function killHyperlink() {
+  destroyMenus();
+  $('#killHyperlinkDialog').dialog('open');
+  $('#killHyperlinkInput')[0].value = "";
+}
 function timerr() {
   destroyMenus();
   $('#timerrDialog').dialog('open');
@@ -350,6 +361,9 @@ function hyperlink_carryOn() {
   addToEditor("link(" + washUserInput('#hyperlinkInput', true) + ", function() {\n");
   addToEditor("\n");
   addToEditor('});');
+}
+function killHyperlink_carryOn() {
+  addToEditor("killHyperlink(" + washUserInput('#killHyperlinkInput', true) + ");");
 }
 function destroyTimerr() {
   destroyMenus();

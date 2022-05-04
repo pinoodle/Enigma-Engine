@@ -68,6 +68,7 @@
           <li class="menuRightItem" onclick="hyperlink();"><div>Print Hyperlink</div></li>
           <li class="menuRightItem" onclick="image();"><div>Print Image</div></li>
           <li><div></div></li>
+          <li class="menuRightItem" onclick="killHyperlink();"><div>Remove Hyperlink</div></li>
           <li class="menuRightItem" onclick="clearConsole();"><div>Clear Console</div></li>
         </ul>
       </li>
@@ -188,14 +189,14 @@
       <li><div></div></li>
 
       <li>
-        <div>Destroy</div>
+        <div>Destroy All</div>
         <ul>
           <li class="menuRightItem" onclick="nukeHyperlinks();"><div>Destroy All Hyperlinks</div></li>
           <li class="menuRightItem" onclick="clearExits();"><div>Destroy All Exits</div></li>
           <li class="menuRightItem" onclick="clearInventory();"><div>Destroy All Inventory Obj</div></li>
           <li class="menuRightItem" onclick="clearRoom();"><div>Destroy All Room Obj</div></li>
           <li><div></div></li>
-          <li class="menuRightItem" onclick="clearAll();"><div>Destroy Everything</div></li>
+          <li class="menuRightItem" onclick="clearAll();"><div>Destroy All of the Above</div></li>
           <li class="menuRightItem" onclick="killGame();"><div>End Game</div></li>
         </ul>
       </li>
@@ -214,6 +215,13 @@
     <div id="hyperlinkDialog" title="Insert hyperlink...">
       <p>Enter below the text of the hyperlink to be printed...</p>
       <input type="text" id="hyperlinkInput" class="dialogInputs pureText">
+    </div>
+    <!-- END OF DIALOG -->
+
+    <!-- KILL HYPERLINK DIALOG -->
+    <div id="killHyperlinkDialog" title="Kill hyperlink...">
+      <p>Enter below the text of the hyperlink you wish to kill...</p>
+      <input type="text" id="killHyperlinkInput" class="dialogInputs pureText">
     </div>
     <!-- END OF DIALOG -->
 
