@@ -27,7 +27,7 @@ html, body {
   height: 100%;
   border-radius: 16px;
   border-style: solid;
-  border-color: #FFF;
+  border-color: #C1C1C1;
   font-size: 1.2em;
 }
 #codeViewContainer {
@@ -133,6 +133,7 @@ input:focus, input:active, textarea:focus, textarea:active, input:hover, textare
   overflow: hidden;
   background-color: #000;
   border-radius: 16px;
+  border-color: #C1C1C1;
 }
 #paper {
   position: relative;
