@@ -293,8 +293,8 @@ function destroyMenus() {
 // Functions to be added to the text editor...
 function addToEditor(string) {
   textEditor.insert(string);
-  textEditor.indent();
 }
+
 function washUserInput(element, liquifyQuotes) {
   var dummy = $(element)[0].value.trim().replace(/\n/g, '<br>');
   dummy = converter.makeHtml(dummy);
@@ -347,7 +347,8 @@ function timerr() {
   $('#timerrInput')[0].value = "";
 }
 function hyperlink_carryOn() {
-  addToEditor("link(" + washUserInput('#hyperlinkInput', true) + ", function() {\n");
+  addToEditor("link(" + washUserInput('#hyperlinkInput', true) + ", function() {");
+  addToEditor("\n");
   addToEditor("\n");
   addToEditor('});');
 }
@@ -359,7 +360,8 @@ function destroyTimerr() {
   addToEditor('clearTimer();');
 }
 function timerr_carryOn() {
-  addToEditor("setTimer(" + washUserInput('#timerrInput', true) + ", function() {\n");
+  addToEditor("setTimer(" + washUserInput('#timerrInput', true) + ", function() {");
+  addToEditor("\n");
   addToEditor("\n");
   addToEditor('});');
 }
@@ -388,8 +390,9 @@ function addRoomObjectAction(string) {
   $('#' + string + 'ObjectInput2')[0].value = "";
 }
 function addRoomObjectAction_carryOn(string) {
-  addToEditor("add" + string.charAt(0).toUpperCase() + string.slice(1) + "ObjectAction(" + washUserInput('#' + string + 'ObjectInput1', true) + ", " + washUserInput('#' + string + 'ObjectInput2', true) + ", function() {\n");
+  addToEditor("add" + string.charAt(0).toUpperCase() + string.slice(1) + "ObjectAction(" + washUserInput('#' + string + 'ObjectInput1', true) + ", " + washUserInput('#' + string + 'ObjectInput2', true) + ", function() {");
   if (localStorage.advancedUser === 'false') addToEditor("// Add any code you want executed when the user chooses to do the above action below this comment!\n");
+  addToEditor("\n");
   addToEditor("\n");
   addToEditor('});');
 }
@@ -589,15 +592,17 @@ function ifStatement_carryOn() {
       command += ' ' + secondSign + ' ';
     }
   }
-  command += ') {\n';
+  command += ') {';
   addToEditor(command);
+  addToEditor('\n');
   addToEditor('\n');
   addToEditor('}');
 }
 
 function elseStatement() {
   destroyMenus();
-  addToEditor('else {\n');
+  addToEditor('else {');
+  addToEditor('\n');
   addToEditor('\n');
   addToEditor('}');
 }
