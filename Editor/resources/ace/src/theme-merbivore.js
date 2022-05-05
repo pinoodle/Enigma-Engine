@@ -81,7 +81,7 @@ border-color: #E6E1DC\
 }\
 .ace-merbivore .ace_comment {\
 font-style: italic;\
-color: #AD2EA4\
+color: #b30000;\
 }\
 .ace-merbivore .ace_entity.ace_other.ace_attribute-name {\
 color: #FFFF89\
@@ -99,4 +99,3 @@ dom.importCssString(exports.cssText, exports.cssClass, false);
                         }
                     });
                 })();
-            
