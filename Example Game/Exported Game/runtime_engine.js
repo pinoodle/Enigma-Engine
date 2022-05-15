@@ -1164,3 +1164,10 @@ function image(nombre) {
   print("<img style='width: inherit;' src='" + nombre + "' alt='PICTURE'>");
   var hahaha = setTimeout(function() { dom_scene.innerHTML += ""; dom_scene.scrollTo(0, dom_scene.scrollHeight); }, 1);
 }
+
+function ask(str) {
+  var abc = prompt(str);
+  abc = abc.trim();
+  abc = abc.toLowerCase();
+  return abc;
+}
