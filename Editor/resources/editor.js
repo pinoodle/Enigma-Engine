@@ -1,5 +1,5 @@
 var textEditor;
-var fontSize = 1.2;
+var fontSize = 1;
 var converter = new showdown.Converter({ noHeaderId : true, simpleLineBreaks : true, backslashEscapesHTMLTags : true, literalMidWordUnderscores : true });
 var ಠ_ಠ = 0;
 var gridSize = 1001;
@@ -26,7 +26,7 @@ window.onload = function() {
   // Advanced User Controller
   localStorage.setItem('advancedUser', 'true');
 
-  if (localStorage.advancedUser === 'true') roomScripts = {'0,0,0' : "roomName(`Start<br>Screen`);\n\n"};
+  if (localStorage.advancedUser === 'true') roomScripts = {'0,0,0' : "roomName(`Start<br>Screen`);\n\n// NOTES (you can delete those):\n\n// This room MUST be used as a Start Screen; the contents of the Variables room are read every time the player enters the Start Screen room.\n\n// Below are some useful functions which are not present in the 'Add Action' menu:\n\n// prompt(); [e.g. pl.name = prompt(`Please enter your name...`); - this will let the player type something in, and the value will be stored in the pl.name variable]\n\n// ask(); - same as prompt(); but will 'wash' user input by converting all letters to lowercase, and remove any blank space at the beginning and end of user input\n\n// isInInventory(`name`); - returns TRUE or FALSE depending on whether the object named is currently in the player's inventory or not. For use with IF statements\n\n// isInRoom(`name`); - returns TRUE or FALSE depending on whether the object named is in the current room or not. For use with IF statements\n\n"};
 
   // Create a JavaScript code editor
   textEditor = ace.edit("codeEditor");
@@ -462,6 +462,14 @@ function enableSaving() {
 function disableSaving() {
   destroyMenus();
   addToEditor('disableSaving();');
+}
+function enableInteraction() {
+  destroyMenus();
+  addToEditor('enableInteraction();');
+}
+function disableInteraction() {
+  destroyMenus();
+  addToEditor('disableInteraction();');
 }
 function clearInventory() {
   destroyMenus();
@@ -921,7 +929,7 @@ function exportScript(downloadResult) {
 
   script = beautifier.js(script);
   var data = "data:text/javascript;charset=utf-8," + encodeURIComponent(script);
-  if (downloadResult) invisibleDownloader(data, 'gamescript.js');
+  if (downloadResult) invisibleDownloader(data, 'gamescript.dat');
   return script;
 
 }
