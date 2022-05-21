@@ -2,6 +2,7 @@ var header = function() {
 
 };
 
+var interaction = 1;
 var ctrl = 0;
 var timer;
 var audio;
@@ -554,6 +555,14 @@ function addRoomObjectAction(name, actionName, action) {
   var objectExists = false;
   for (var i = 0; i < roomObjects.length; i++) {
     if (roomObjects[i].name === name) {
+
+      for (var j = 0; j < roomObjects[i].actions.length; j++) {
+        if (roomObjects[i].actions[j].name === actionName) {
+          var index = roomObjects[i].actions.indexOf(roomObjects[i].actions[j]);
+          roomObjects[i].actions.splice(index, 1);
+        }
+      }
+
       roomObjects[i].actions.push({ name: actionName, action: action });
       objectExists = true;
       break;
@@ -618,6 +627,14 @@ function addInventoryObjectAction(name, actionName, action) {
   var objectExists = false;
   for (var i = 0; i < inventoryObjects.length; i++) {
     if (inventoryObjects[i].name === name) {
+
+      for (var j = 0; j < inventoryObjects[i].actions.length; j++) {
+        if (inventoryObjects[i].actions[j].name === actionName) {
+          var index = inventoryObjects[i].actions.indexOf(inventoryObjects[i].actions[j]);
+          inventoryObjects[i].actions.splice(index, 1);
+        }
+      }
+
       inventoryObjects[i].actions.push({ name: actionName, action: action });
       objectExists = true;
       break;
