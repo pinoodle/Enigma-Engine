@@ -63,67 +63,75 @@
       <li>
         <div>Console</div>
         <ul>
-          <li class="menuRightItem" onclick="print();"><div>Print Text</div></li>
-          <li class="menuRightItem" onclick="hyperlink();"><div>Print Hyperlink</div></li>
-          <li class="menuRightItem" onclick="image();"><div>Print Image</div></li>
+          <li class="menuRightItem" title="Display text to the player" onclick="print();"><div>Print Text</div></li>
+          <li class="menuRightItem" title="Display a hyperlink, which can perform any actions you wish when clicked" onclick="hyperlink();"><div>Print Hyperlink</div></li>
+          <li class="menuRightItem" title="Display an image" onclick="image();"><div>Print Image</div></li>
           <li><div></div></li>
-          <li class="menuRightItem" onclick="killHyperlink();"><div>Remove Hyperlink</div></li>
-          <li class="menuRightItem" onclick="clearConsole();"><div>Clear Console</div></li>
+          <li class="menuRightItem" title="Disable a specific hyperlink" onclick="killHyperlink();"><div>Remove Hyperlink</div></li>
+          <li class="menuRightItem" title="Remove everything from the console" onclick="clearConsole();"><div>Clear Console</div></li>
         </ul>
       </li>
 
       <li>
         <div>Exits</div>
         <ul>
-          <li class="menuRightItem" onclick="addExits('add');"><div>Add Exits</div></li>
-          <li class="menuRightItem" onclick="teleport();"><div>Teleport Player</div></li>
+          <li class="menuRightItem" title="Add directions in which the player can go" onclick="addExits('add');"><div>Add Exits</div></li>
+          <li class="menuRightItem" title="Teleport the player to a specific location" onclick="teleport();"><div>Teleport Player</div></li>
           <li><div></div></li>
-          <li class="menuRightItem" onclick="addExits('remove');"><div>Remove Exits</div></li>
+          <li class="menuRightItem" title="Remove directions in which the player can go" onclick="addExits('remove');"><div>Remove Exits</div></li>
         </ul>
       </li>
 
       <li>
         <div>Names</div>
         <ul>
-          <li class="menuRightItem" onclick="gameTitle();"><div>Game Title</div></li>
-          <li class="menuRightItem" onclick="roomName();"><div>Room Name</div></li>
+          <li class="menuRightItem" title="Set the title of the game" onclick="gameTitle();"><div>Game Title</div></li>
+          <li class="menuRightItem" title="Se the name of the current room, as it should appear to the player on the map" onclick="roomName();"><div>Room Name</div></li>
+        </ul>
+      </li>
+
+      <li>
+        <div>Player Interaction</div>
+        <ul>
+          <li class="menuRightItem" title="Enable player interaction (allows the player to interact with room/inventory objects again, and re-enables all exits that were enabled before player interaction was disabled)" onclick="enableInteraction();"><div>Enable Player Interaction</div></li>
+          <li class="menuRightItem" title="Disable player interaction (stops the player from interacting with room/inventory objects, and disables all exits). IMPORTANT: This must be restricted to a single room. If you choose to teleport the player while interaction is disabled, re-enable interaction, teleport, then instantly disable it again" onclick="disableInteraction();"><div>Disable Player Interaction</div></li>
         </ul>
       </li>
 
       <li>
         <div>Save Game</div>
         <ul>
-          <li class="menuRightItem" onclick="enableSaving();"><div>Enable Ability to Save</div></li>
+          <li class="menuRightItem" title="Enable the ability to save the game. Saving is enabled by default" onclick="enableSaving();"><div>Enable Ability to Save</div></li>
           <li><div></div></li>
-          <li class="menuRightItem" onclick="disableSaving();"><div>Disable Ability to Save</div></li>
+          <li class="menuRightItem" title="Disable the ability to save the game" onclick="disableSaving();"><div>Disable Ability to Save</div></li>
         </ul>
       </li>
 
       <li>
         <div>Sound</div>
         <ul>
-          <li class="menuRightItem" onclick="playSound();"><div>Play Sound</div></li>
-          <li class="menuRightItem" onclick="playMusic();"><div>Play Music</div></li>
+          <li class="menuRightItem" title="Play a short sound clip" onclick="playSound();"><div>Play Sound</div></li>
+          <li class="menuRightItem" title="Start playing music. Music will loop until stopped. If music is already playing, it will be paused and replaced by the new music" onclick="playMusic();"><div>Play Music</div></li>
           <li><div></div></li>
-          <li class="menuRightItem" onclick="pauseMusic();"><div>Pause Music</div></li>
+          <li class="menuRightItem" title="Stop music" onclick="pauseMusic();"><div>Pause Music</div></li>
         </ul>
       </li>
 
       <li>
         <div>Statistics</div>
         <ul>
-          <li class="menuRightItem" onclick="addStatistic();"><div>Add Player Statistic</div></li>
+          <li class="menuRightItem" title="Add a statistic (i.e. make a variable visible to the player in the Stats tab)" onclick="addStatistic();"><div>Add Player Statistic</div></li>
           <li><div></div></li>
-          <li class="menuRightItem" onclick="removeStatistic();"><div>Remove Player Statistic</div></li>
+          <li class="menuRightItem" title="Remove a statistic (i.e. hide a variable you previously made visible to the player again)" onclick="removeStatistic();"><div>Remove Player Statistic</div></li>
         </ul>
       </li>
 
       <li>
         <div>Timer</div>
         <ul>
-          <li class="menuRightItem" onclick="timerr();"><div>Set Timer</div></li>
+          <li class="menuRightItem" title="Set timer. IMPORTANT: You should only have one timer running at any one time. If you let several timers run at once, they will still work, but you won't be able to destroy them, only the last timer you created can be destroyed with the Destroy Timer function in this case. Also, this has not yet been integrated into the save game mechanism, so either restrict timers to a single room (as progress in the current room is not saved, so the timers will work as intended), or disable saving while the timer is running" onclick="timerr();"><div>Set Timer</div></li>
           <li><div></div></li>
-          <li class="menuRightItem" onclick="destroyTimerr();"><div>Destroy Timer</div></li>
+          <li class="menuRightItem" title="Destroy the last created timer" onclick="destroyTimerr();"><div>Destroy Timer</div></li>
         </ul>
       </li>
 
@@ -132,18 +140,18 @@
       <li>
         <div>Inventory Objects</div>
         <ul>
-          <li class="menuRightItem" onclick="addRoomObject('inventory');"><div>Add Object</div></li>
+          <li class="menuRightItem" title="Create an object in the inventory menu" onclick="addRoomObject('inventory');"><div>Add Object</div></li>
           <li><div></div></li>
-          <li class="menuRightItem" onclick="removeRoomObject('inventory');"><div>Remove Object</div></li>
+          <li class="menuRightItem" title="Remove an object from the inventory menu" onclick="removeRoomObject('inventory');"><div>Remove Object</div></li>
         </ul>
       </li>
 
       <li>
         <div>Inventory Object Actions</div>
         <ul>
-          <li class="menuRightItem" onclick="addRoomObjectAction('inventory');"><div>Add Action to Object</div></li>
+          <li class="menuRightItem" title="Add an action to an inventory object. If you add an action to an object that does not exist, that object will be created automatically. If you add an action that already exists in this object, the old action will be removed and the new one will be added in" onclick="addRoomObjectAction('inventory');"><div>Add Action to Object</div></li>
           <li><div></div></li>
-          <li class="menuRightItem" onclick="removeRoomObjectAction('inventory');"><div>Remove Action from Object</div></li>
+          <li class="menuRightItem" title="Remove an action from an inventory object" onclick="removeRoomObjectAction('inventory');"><div>Remove Action from Object</div></li>
         </ul>
       </li>
 
@@ -152,18 +160,18 @@
       <li>
         <div>Room Objects</div>
         <ul>
-          <li class="menuRightItem" onclick="addRoomObject('room');"><div>Add Object</div></li>
+          <li class="menuRightItem" title="Create an object in the room objects menu" onclick="addRoomObject('room');"><div>Add Object</div></li>
           <li><div></div></li>
-          <li class="menuRightItem" onclick="removeRoomObject('room');"><div>Remove Object</div></li>
+          <li class="menuRightItem" title="Remove an object from the room objects menu" onclick="removeRoomObject('room');"><div>Remove Object</div></li>
         </ul>
       </li>
 
       <li>
         <div>Room Object Actions</div>
         <ul>
-          <li class="menuRightItem" onclick="addRoomObjectAction('room');"><div>Add Action to Object</div></li>
+          <li class="menuRightItem" title="Add an action to a room object. If you add an action to an object that does not exist, that object will be created automatically. If you add an action that already exists in this object, the old action will be removed and the new one will be added in" onclick="addRoomObjectAction('room');"><div>Add Action to Object</div></li>
           <li><div></div></li>
-          <li class="menuRightItem" onclick="removeRoomObjectAction('room');"><div>Remove Action from Object</div></li>
+          <li class="menuRightItem" title="Remove an action from a room object" onclick="removeRoomObjectAction('room');"><div>Remove Action from Object</div></li>
         </ul>
       </li>
 
@@ -190,13 +198,13 @@
       <li>
         <div>Destroy All</div>
         <ul>
-          <li class="menuRightItem" onclick="nukeHyperlinks();"><div>Destroy All Hyperlinks</div></li>
-          <li class="menuRightItem" onclick="clearExits();"><div>Destroy All Exits</div></li>
-          <li class="menuRightItem" onclick="clearInventory();"><div>Destroy All Inventory Obj</div></li>
-          <li class="menuRightItem" onclick="clearRoom();"><div>Destroy All Room Obj</div></li>
+          <li class="menuRightItem" title="Disables all hyperlinks currently in the console" onclick="nukeHyperlinks();"><div>Destroy All Hyperlinks</div></li>
+          <li class="menuRightItem" title="Disables all 10 exits at once" onclick="clearExits();"><div>Destroy All Exits</div></li>
+          <li class="menuRightItem" title="Purges the inventory of all objects" onclick="clearInventory();"><div>Destroy All Inventory Obj</div></li>
+          <li class="menuRightItem" title="Purges the currenty room of all objects" onclick="clearRoom();"><div>Destroy All Room Obj</div></li>
           <li><div></div></li>
-          <li class="menuRightItem" onclick="clearAll();"><div>Destroy All of the Above</div></li>
-          <li class="menuRightItem" onclick="killGame();"><div>End Game</div></li>
+          <li class="menuRightItem" title="Does all 4 of the above at once" onclick="clearAll();"><div>Destroy All of the Above</div></li>
+          <li class="menuRightItem" title="Same as 'Destroy All of the Above', but also kills the timer, and displays a Game Over message" onclick="killGame();"><div>End Game</div></li>
         </ul>
       </li>
 

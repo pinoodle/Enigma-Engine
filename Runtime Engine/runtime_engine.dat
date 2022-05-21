@@ -3,6 +3,7 @@ var header = function() {
 };
 
 var interaction = 1;
+var intDirs = [];
 var ctrl = 0;
 var timer;
 var audio;
@@ -729,7 +730,7 @@ function changeItemsInPanel(item) {
         panels[y].onclick = function() {
           dom_scene.innerHTML += "<span class='command'> &gt ROOM → " + this.roomObj.name.toUpperCase() + " → " + this.actionsName + "</span><br />";
           dom_scene.scrollTo(0, dom_scene.scrollHeight);
-          this.action();
+          if (interaction === 1) this.action(); else print("You cannot currently do this!");
           dom_sidePanel.style.right = "-70%";
           document.getElementById("surroundings_btn").classList.remove("buttonActive"); };
         }
@@ -765,7 +766,7 @@ function changeItemsInPanel(item) {
           panels[y].onclick = function() {
             dom_scene.innerHTML += "<span class='command'> &gt INVENTORY → " + this.inventoryObj.name.toUpperCase() + " → " + this.actionsName + "</span><br />";
             dom_scene.scrollTo(0, dom_scene.scrollHeight);
-            this.action();
+            if (interaction === 1) this.action(); else print("You cannot currently do this!");
             dom_sidePanel.style.right = "-70%";
             document.getElementById("inventory_btn").classList.remove("buttonActive"); }; // !!!!!!!! Oh, and changed the '0' to a '1' here.
           }
@@ -1187,4 +1188,48 @@ function ask(str) {
   abc = abc.trim();
   abc = abc.toLowerCase();
   return abc;
+}
+
+function enableInteraction() {
+  if (interaction === 0) {
+    for (var x = 0; x < intDirs.length; x++) {
+      addExits(intDirs[x]);
+    }
+    intDirs = [];
+    interaction = 1;
+  }
+}
+
+function disableInteraction() {
+  if (interaction === 1) {
+    intDirs = [];
+    if (document.getElementById("north").classList.contains("directionAvailable")) intDirs.push(north);
+    if (document.getElementById("south").classList.contains("directionAvailable")) intDirs.push(south);
+    if (document.getElementById("east").classList.contains("directionAvailable")) intDirs.push(east);
+    if (document.getElementById("west").classList.contains("directionAvailable")) intDirs.push(west);
+    if (document.getElementById("northeast").classList.contains("directionAvailable")) intDirs.push(northeast);
+    if (document.getElementById("northwest").classList.contains("directionAvailable")) intDirs.push(northwest);
+    if (document.getElementById("southeast").classList.contains("directionAvailable")) intDirs.push(southeast);
+    if (document.getElementById("southwest").classList.contains("directionAvailable")) intDirs.push(southwest);
+    if (document.getElementById("up").classList.contains("directionAvailable")) intDirs.push(up);
+    if (document.getElementById("down").classList.contains("directionAvailable")) intDirs.push(down);
+    clearExits();
+    interaction = 0;
+  }
+}
+
+function isInInventory(name) {
+  var res = false;
+  for (var j = 0; j < inventoryObjects.length; j++) {
+    if (inventoryObjects[j].name === name) res = true;
+  }
+  return res;
+}
+
+function isInRoom(name) {
+  var res = false;
+  for (var j = 0; j < roomObjects.length; j++) {
+    if (roomObjects[j].name === name) res = true;
+  }
+  return res;
 }
