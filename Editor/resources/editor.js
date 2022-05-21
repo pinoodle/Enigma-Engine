@@ -463,6 +463,10 @@ function disableSaving() {
   destroyMenus();
   addToEditor('disableSaving();');
 }
+function refreshRoom() {
+  destroyMenus();
+  addToEditor('refreshRoom();');
+}
 function enableInteraction() {
   destroyMenus();
   addToEditor('enableInteraction();');
