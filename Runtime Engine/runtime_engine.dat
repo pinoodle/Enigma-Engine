@@ -1233,3 +1233,7 @@ function isInRoom(name) {
   }
   return res;
 }
+
+function refreshRoom() {
+  teleport(room);
+}
