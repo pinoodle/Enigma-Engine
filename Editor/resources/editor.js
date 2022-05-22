@@ -537,17 +537,25 @@ function addExits_carryOn(string) {
   if ($('#checkbox-10').prop('checked')) { command += 'down, '; dummy++; }
 
   if (dummy > 0) command = command.substring(0, command.length - 2);
-  if (string === 'addFake' || string === 'removeFake') {
+
+  if (string === 'addFake') {
     command += '], function() {';
     addToEditor(command);
     addToEditor('\n');
     addToEditor('\n');
     addToEditor('});');
   }
+
+  else if (string === 'removeFake') {
+    command += ']);';
+    addToEditor(command);
+  }
+
   else {
     command += ');';
     addToEditor(command);
   }
+
 }
 function roomName() {
   destroyMenus();

@@ -2,6 +2,7 @@ var header = function() {
 
 };
 
+var fakeUp; var fakeDown; var fakeNorth; var fakeSouth; var fakeEast; var fakeWest; var fakeNortheast; var fakeNorthwest; var fakeSoutheast; var fakeSouthwest;
 var interaction = 1;
 var intDirs = [];
 var ctrl = 0;
@@ -253,20 +254,21 @@ function onGameLoad() {
   // the Event Listeners first execute the move() function to update the player coordinates and then draw the South line for the
   // new position.
 
-  north_arrow.addEventListener("click", function() { if (this.classList.contains("directionAvailable")) { move([0,1,0]); allowedLines.push(room + ",vertical"); drawLines(); removeArrowColorings(this,""); }});
-  south_arrow.addEventListener("click", function() { if (this.classList.contains("directionAvailable")) { allowedLines.push(room + ",vertical"); move([0,-1,0]); drawLines(); removeArrowColorings(this,""); }});
-  east_arrow.addEventListener("click", function() { if (this.classList.contains("directionAvailable")) { allowedLines.push(room + ",horizontal"); move([1,0,0]); drawLines(); removeArrowColorings(this,""); }});
-  west_arrow.addEventListener("click", function() { if (this.classList.contains("directionAvailable")) { move([-1,0,0]); allowedLines.push(room + ",horizontal"); drawLines(); removeArrowColorings(this,""); }});
-  northwest_arrow.parentNode.addEventListener("click", function() { if (this.children[0].classList.contains("directionAvailable")) { allowedLines.push(room + ",downhill"); move([-1,1,0]); drawLines(); removeArrowColorings(this.children[0],""); }});
-  northeast_arrow.parentNode.addEventListener("click", function() { if (this.children[0].classList.contains("directionAvailable")) { allowedLines.push(room + ",uphill"); move([1,1,0]); drawLines(); removeArrowColorings(this.children[0],""); }});
-  southwest_arrow.parentNode.addEventListener("click", function() { if (this.children[0].classList.contains("directionAvailable")) { move([-1,-1,0]); allowedLines.push(room + ",uphill"); drawLines(); removeArrowColorings(this.children[0],""); }});
-  southeast_arrow.parentNode.addEventListener("click", function() { if (this.children[0].classList.contains("directionAvailable")) { move([1,-1,0]); allowedLines.push(room + ",downhill"); drawLines(); removeArrowColorings(this.children[0],""); }});
+  north_arrow.addEventListener("click", function() { if (this.classList.contains("directionAvailable")) { move([0,1,0]); allowedLines.push(room + ",vertical"); drawLines(); removeArrowColorings(this,""); } else if (this.classList.contains("fakeDirectionAvailable")) fakeNorth(); });
+  south_arrow.addEventListener("click", function() { if (this.classList.contains("directionAvailable")) { allowedLines.push(room + ",vertical"); move([0,-1,0]); drawLines(); removeArrowColorings(this,""); } else if (this.classList.contains("fakeDirectionAvailable")) fakeSouth(); });
+  east_arrow.addEventListener("click", function() { if (this.classList.contains("directionAvailable")) { allowedLines.push(room + ",horizontal"); move([1,0,0]); drawLines(); removeArrowColorings(this,""); } else if (this.classList.contains("fakeDirectionAvailable")) fakeEast(); });
+  west_arrow.addEventListener("click", function() { if (this.classList.contains("directionAvailable")) { move([-1,0,0]); allowedLines.push(room + ",horizontal"); drawLines(); removeArrowColorings(this,""); } else if (this.classList.contains("fakeDirectionAvailable")) fakeWest(); });
+  northwest_arrow.parentNode.addEventListener("click", function() { if (this.children[0].classList.contains("directionAvailable")) { allowedLines.push(room + ",downhill"); move([-1,1,0]); drawLines(); removeArrowColorings(this.children[0],""); } else if (this.children[0].classList.contains("fakeDirectionAvailable")) fakeNorthwest(); });
+  northeast_arrow.parentNode.addEventListener("click", function() { if (this.children[0].classList.contains("directionAvailable")) { allowedLines.push(room + ",uphill"); move([1,1,0]); drawLines(); removeArrowColorings(this.children[0],""); } else if (this.children[0].classList.contains("fakeDirectionAvailable")) fakeNortheast(); });
+  southwest_arrow.parentNode.addEventListener("click", function() { if (this.children[0].classList.contains("directionAvailable")) { move([-1,-1,0]); allowedLines.push(room + ",uphill"); drawLines(); removeArrowColorings(this.children[0],""); } else if (this.children[0].classList.contains("fakeDirectionAvailable")) fakeSouthwest(); });
+  southeast_arrow.parentNode.addEventListener("click", function() { if (this.children[0].classList.contains("directionAvailable")) { move([1,-1,0]); allowedLines.push(room + ",downhill"); drawLines(); removeArrowColorings(this.children[0],""); } else if (this.children[0].classList.contains("fakeDirectionAvailable")) fakeSoutheast(); });
 
    up_arrow.addEventListener("click", function() {
      if (this.classList.contains("directionAvailable")) {
        changeMapLayer(1);
        removeArrowColorings(this, "don't remove");
      }
+     else if (this.classList.contains("fakeDirectionAvailable")) fakeUp();
     });
 
     down_arrow.addEventListener("click", function() {
@@ -274,6 +276,7 @@ function onGameLoad() {
         changeMapLayer(-1);
         removeArrowColorings(this, "don't remove");
       }
+      else if (this.classList.contains("fakeDirectionAvailable")) fakeDown();
     });
 
   // Other code to be executed at the start below...
@@ -465,6 +468,7 @@ function removeArrowColorings(item,delStatus) {
   document.getElementById("surroundings_btn").classList.remove("buttonActive");
   document.getElementById("inventory_btn").classList.remove("buttonActive");
   nukeHyperlinks();
+  removeFakeExits([north, south, east, west, northwest, northeast, southwest, southeast, up, down]);
   autoSave();
   header();
   try { definitions[room](); } catch(error) { print(error); }
@@ -519,6 +523,7 @@ function print(string) {
 function addExits(a,b,c,m,e,f,g,h,k,l) {
   function checkCoord(string) {
     if (a === string || b === string || c === string || m === string || e === string || f === string || g === string || h === string || k === string || l === string) {
+      removeFakeExits(string);
       document.getElementById(string).classList.add("directionAvailable");
     }
   };
@@ -1236,4 +1241,33 @@ function isInRoom(name) {
 
 function refreshRoom() {
   teleport(room);
+}
+
+function addFakeExits(txt, funn) {
+  for (var k = 0; k < txt.length; k++) {
+    removeExits(txt[k]);
+  }
+  if (txt.indexOf(north) !== -1) { north_arrow.classList.add("fakeDirectionAvailable"); fakeNorth = funn; }
+  if (txt.indexOf(south) !== -1) { south_arrow.classList.add("fakeDirectionAvailable"); fakeSouth = funn; }
+  if (txt.indexOf(east) !== -1) { east_arrow.classList.add("fakeDirectionAvailable"); fakeEast = funn; }
+  if (txt.indexOf(west) !== -1) { west_arrow.classList.add("fakeDirectionAvailable"); fakeWest = funn; }
+  if (txt.indexOf(northeast) !== -1) { northeast_arrow.classList.add("fakeDirectionAvailable"); fakeNortheast = funn; }
+  if (txt.indexOf(northwest) !== -1) { northwest_arrow.classList.add("fakeDirectionAvailable"); fakeNorthwest = funn; }
+  if (txt.indexOf(southeast) !== -1) { southeast_arrow.classList.add("fakeDirectionAvailable"); fakeSoutheast = funn; }
+  if (txt.indexOf(southwest) !== -1) { southwest_arrow.classList.add("fakeDirectionAvailable"); fakeSouthwest = funn; }
+  if (txt.indexOf(up) !== -1) { up_arrow.classList.add("fakeDirectionAvailable"); fakeUp = funn; }
+  if (txt.indexOf(down) !== -1) { down_arrow.classList.add("fakeDirectionAvailable"); fakeDown = funn; }
+}
+
+function removeFakeExits(txt) {
+  if (txt.indexOf(north) !== -1) north_arrow.classList.remove("fakeDirectionAvailable");
+  if (txt.indexOf(south) !== -1) south_arrow.classList.remove("fakeDirectionAvailable");
+  if (txt.indexOf(east) !== -1) east_arrow.classList.remove("fakeDirectionAvailable");
+  if (txt.indexOf(west) !== -1) west_arrow.classList.remove("fakeDirectionAvailable");
+  if (txt.indexOf(northeast) !== -1) northeast_arrow.classList.remove("fakeDirectionAvailable");
+  if (txt.indexOf(northwest) !== -1) northwest_arrow.classList.remove("fakeDirectionAvailable");
+  if (txt.indexOf(southeast) !== -1) southeast_arrow.classList.remove("fakeDirectionAvailable");
+  if (txt.indexOf(southwest) !== -1) southwest_arrow.classList.remove("fakeDirectionAvailable");
+  if (txt.indexOf(up) !== -1) up_arrow.classList.remove("fakeDirectionAvailable");
+  if (txt.indexOf(down) !== -1) down_arrow.classList.remove("fakeDirectionAvailable");
 }
