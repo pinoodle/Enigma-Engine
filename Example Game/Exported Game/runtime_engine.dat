@@ -5,6 +5,7 @@ var header = function() {
 var fakeUp; var fakeDown; var fakeNorth; var fakeSouth; var fakeEast; var fakeWest; var fakeNortheast; var fakeNorthwest; var fakeSoutheast; var fakeSouthwest;
 var interaction = 1;
 var intDirs = [];
+var intFakeDirs = [];
 var ctrl = 0;
 var timer;
 var audio;
@@ -1136,6 +1137,7 @@ function clearExits() {
   southeast_arrow.classList.remove("directionAvailable");
   up_arrow.classList.remove("directionAvailable");
   down_arrow.classList.remove("directionAvailable");
+  removeFakeExits([north, south, east, west, northwest, northeast, southwest, southeast, up, down]);
 }
 
 function clearAll() {
@@ -1200,7 +1202,11 @@ function enableInteraction() {
     for (var x = 0; x < intDirs.length; x++) {
       addExits(intDirs[x]);
     }
+    for (var y = 0; y < intFakeDirs.length; y++) {
+      eval(intFakeDirs[y] + `_arrow.classList.add("fakeDirectionAvailable");`);
+    }
     intDirs = [];
+    intFakeDirs = [];
     interaction = 1;
   }
 }
@@ -1208,6 +1214,7 @@ function enableInteraction() {
 function disableInteraction() {
   if (interaction === 1) {
     intDirs = [];
+    intFakeDirs = [];
     if (document.getElementById("north").classList.contains("directionAvailable")) intDirs.push(north);
     if (document.getElementById("south").classList.contains("directionAvailable")) intDirs.push(south);
     if (document.getElementById("east").classList.contains("directionAvailable")) intDirs.push(east);
@@ -1218,6 +1225,17 @@ function disableInteraction() {
     if (document.getElementById("southwest").classList.contains("directionAvailable")) intDirs.push(southwest);
     if (document.getElementById("up").classList.contains("directionAvailable")) intDirs.push(up);
     if (document.getElementById("down").classList.contains("directionAvailable")) intDirs.push(down);
+
+    if (document.getElementById("north").classList.contains("fakeDirectionAvailable")) intFakeDirs.push(north);
+    if (document.getElementById("south").classList.contains("fakeDirectionAvailable")) intFakeDirs.push(south);
+    if (document.getElementById("east").classList.contains("fakeDirectionAvailable")) intFakeDirs.push(east);
+    if (document.getElementById("west").classList.contains("fakeDirectionAvailable")) intFakeDirs.push(west);
+    if (document.getElementById("northeast").classList.contains("fakeDirectionAvailable")) intFakeDirs.push(northeast);
+    if (document.getElementById("northwest").classList.contains("fakeDirectionAvailable")) intFakeDirs.push(northwest);
+    if (document.getElementById("southeast").classList.contains("fakeDirectionAvailable")) intFakeDirs.push(southeast);
+    if (document.getElementById("southwest").classList.contains("fakeDirectionAvailable")) intFakeDirs.push(southwest);
+    if (document.getElementById("up").classList.contains("fakeDirectionAvailable")) intFakeDirs.push(up);
+    if (document.getElementById("down").classList.contains("fakeDirectionAvailable")) intFakeDirs.push(down);
     clearExits();
     interaction = 0;
   }
