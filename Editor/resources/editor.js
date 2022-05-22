@@ -500,16 +500,29 @@ function addExits(string) {
       title: 'Add exits...'
     });
   }
-  else {
+  else if (string === 'remove') {
     $('#addExitsDialog').dialog({
       buttons: [{ text: "OK", click: function() { addExits_carryOn('remove'); $(this).dialog('close'); } }],
       title: 'Remove exits...'
+    });
+  }
+  else if (string === 'addFake') {
+    $('#addExitsDialog').dialog({
+      buttons: [{ text: "OK", click: function() { addExits_carryOn('addFake'); $(this).dialog('close'); } }],
+      title: 'Add fake exits...'
+    });
+  }
+  else if (string === 'removeFake') {
+    $('#addExitsDialog').dialog({
+      buttons: [{ text: "OK", click: function() { addExits_carryOn('removeFake'); $(this).dialog('close'); } }],
+      title: 'Remove fake exits...'
     });
   }
   $('#addExitsDialog').dialog('open');
 }
 function addExits_carryOn(string) {
   var command = string + 'Exits(';
+  if (string === 'addFake' || string === 'removeFake') command += '[';
   var dummy = 0;
 
   if ($('#checkbox-1').prop('checked')) { command += 'north, '; dummy++; }
@@ -524,8 +537,17 @@ function addExits_carryOn(string) {
   if ($('#checkbox-10').prop('checked')) { command += 'down, '; dummy++; }
 
   if (dummy > 0) command = command.substring(0, command.length - 2);
-  command += ');';
-  addToEditor(command);
+  if (string === 'addFake' || string === 'removeFake') {
+    command += '], function() {';
+    addToEditor(command);
+    addToEditor('\n');
+    addToEditor('\n');
+    addToEditor('});');
+  }
+  else {
+    command += ');';
+    addToEditor(command);
+  }
 }
 function roomName() {
   destroyMenus();
