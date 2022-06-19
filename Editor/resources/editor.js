@@ -208,7 +208,7 @@ window.onload = function() {
   $('#codeEditor').click(function() { destroyMenus(); });
   $('#zoomIn').click(function() { destroyMenus(); fontSize = fontSize + 0.1; $('#codeEditor').css({ 'fontSize': fontSize + 'em' }); });
   $('#zoomOut').click(function() { destroyMenus(); fontSize = fontSize - 0.1; $('#codeEditor').css({ 'fontSize': fontSize + 'em' }); });
-  $('#checkSyntax').click(function() { destroyMenus(); try { esprima.parseScript(textEditor.getValue()); alert("No syntax errors found!\nThat doesn't necessarily mean there are none, however - we just couldn't find any."); } catch(error) { alert(error); } });
+  $('#checkSyntax').click(function() { destroyMenus(); textEditor.session.setValue(beautifier.js(textEditor.getValue())); });
   $('#zoomInButton').click(function() { mapScaler+=0.2; $('#paper').css({ 'transform' : 'scale(' + mapScaler + ')' }); });
   $('#zoomOutButton').click(function() { mapScaler-=0.2; $('#paper').css({ 'transform' : 'scale(' + mapScaler + ')' }); });
   $('#deleteButton').click(function() {
