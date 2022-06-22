@@ -363,6 +363,8 @@ function onGameLoad() {
 
   var ctrlFix = setTimeout(function() { ctrl++; }, 1000);
 
+  document.getElementById("loadingMask").style.display = "none";
+
 };
 
 // Function to draw a map square. It takes in the player's current position and draws a square on it
