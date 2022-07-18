@@ -18,6 +18,3 @@ See the attached "Manual.pdf" file for instructions on how to use this engine. A
 
 ## Note
 This is a re-release of an engine I made back in 2020. The UI of games created with this engine has been revamped, giving it a more modern, more appealing dark theme. Many useful functions have also been added, including timer and multimedia support, and several bugs have been fixed. This release also comes with a brand new manual, as people weren't sure how to use the engine with the last release. A higher-quality video tutorial is also planned.
-
-## Contact Information
-If you have any questions, feel free to drop me an email on pinoodle@protonmail.com
