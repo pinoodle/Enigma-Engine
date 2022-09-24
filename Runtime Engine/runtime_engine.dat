@@ -5,6 +5,7 @@ var header = function() {
 var fakeUp; var fakeDown; var fakeNorth; var fakeSouth; var fakeEast; var fakeWest; var fakeNortheast; var fakeNorthwest; var fakeSoutheast; var fakeSouthwest;
 var interaction = 1;
 var intDirs = [];
+var kolorek = "#6c3300";
 var intFakeDirs = [];
 var ctrl = 0;
 var timer;
@@ -282,7 +283,6 @@ function onGameLoad() {
 
   // Other code to be executed at the start below...
   header();
-  try { definitions[room](); } catch(error) { print(error); }
 
   // KEYBOARD
 
@@ -363,6 +363,8 @@ function onGameLoad() {
 
   var ctrlFix = setTimeout(function() { ctrl++; }, 1000);
 
+  try { definitions[room](); } catch(error) { print(error); }
+  changeColor(kolorek);
   document.getElementById("loadingMask").style.display = "none";
 
 };
@@ -950,6 +952,8 @@ function autoSave() {
 
   sessionStorage.setItem("musicHolder", musicHolder);
 
+  sessionStorage.setItem("color", kolorek);
+
   sessionStorage.setItem("room", room); // saves the player's current position
   sessionStorage.setItem("statistics", JSON.stringify(statistics)); // saves the player statistics metadata
   sessionStorage.setItem("sceneText", dom_scene.innerHTML); // save the console text
@@ -1002,6 +1006,7 @@ function saveGame(command) {
       localStorage.setItem("room" + "$" + name, sessionStorage.room);
       localStorage.setItem("statistics" + "$" + name, sessionStorage.statistics);
       localStorage.setItem("sceneText" + "$" + name, sessionStorage.sceneText);
+      localStorage.setItem("color" + "$" + name, sessionStorage.color);
       localStorage.setItem("musicHolder" + "$" + name, sessionStorage.musicHolder);
       localStorage.setItem("playerVariables" + "$" + name, sessionStorage.playerVariables);
       localStorage.setItem("roomLabels" + "$" + name, sessionStorage.roomLabels);
@@ -1089,6 +1094,8 @@ function loadGame(command) {
       removeArrowColorings("say nothing","don't remove");
 
       document.getElementById("statusReport").style.color = "green";
+      kolorek = localStorage.getItem("color" + "$" + command);
+      changeColor(kolorek);
       return "Game loaded successfully!";
     }
     else {
@@ -1190,7 +1197,7 @@ function pauseMusic() {
 }
 
 function image(nombre) {
-  print("<img style='width: inherit;' src='" + nombre + "' alt='PICTURE'>");
+  print("<img src='" + nombre + "' alt='PICTURE'>");
   var hahaha = setTimeout(function() { dom_scene.innerHTML += ""; dom_scene.scrollTo(0, dom_scene.scrollHeight); }, 1);
 }
 
@@ -1292,4 +1299,9 @@ function removeFakeExits(txt) {
   if (txt.indexOf(southwest) !== -1) southwest_arrow.classList.remove("fakeDirectionAvailable");
   if (txt.indexOf(up) !== -1) up_arrow.classList.remove("fakeDirectionAvailable");
   if (txt.indexOf(down) !== -1) down_arrow.classList.remove("fakeDirectionAvailable");
+}
+
+function changeColor(clr) {
+  kolorek = clr;
+  document.documentElement.style.background = "radial-gradient(#000, " + kolorek + ")";
 }
