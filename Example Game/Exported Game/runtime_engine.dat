@@ -33,8 +33,8 @@ var mapWidth;
 var mapCenterY;
 var mapCenterX;
 
-var opacity = 0;
-var fontSize = 1.3;
+var opacity = 0.2;
+var fontSize = 1.2;
 
 var hypcntr = 0;
 var ornt = "";
@@ -44,6 +44,7 @@ function onGameLoad() {
 
   if (window.innerHeight > window.innerWidth) {
     ornt = "portrait";
+    fontSize = 1.0;
   }
   else {
     ornt = "landscape";
@@ -818,19 +819,17 @@ function updateStats() {
   ul.classList.add("statt");
   dom_mask.appendChild(ul);
   var child = dom_mask.children[1];
-  child.innerHTML = "<br>";
   for (var i = 0; i < statistics.length; i++) {
-    child.innerHTML += "<div class='boxy' style='padding-left: 8px; padding-right: 8px;'><br>" + statistics[i].name.replace(/_/g, " ").toUpperCase() + ": " + eval("pl." + statistics[i].name) + statistics[i].symbol + "<br><br></div><br>";
+    child.innerHTML += "<div class='boxy' style='padding-left: 8px; padding-right: 8px;'><br>" + statistics[i].name.replace(/_/g, " ").toUpperCase() + ": " + eval("pl." + statistics[i].name) + statistics[i].symbol + "<br><br></div>";
   }
 }
 
 function showSettings() {
   dom_mask.style.textAlign = "center";
   dom_mask.innerHTML = "<div class='hedda'>SETTINGS</div>";
-  if (ornt === "portrait") dom_mask.innerHTML += "<br>";
-  dom_mask.innerHTML += "<div class='boxy' id='boxy_one'></div><br><div class='boxy' id='boxy_two'></div><br><div class='boxy' id='boxy_three'></div><br><div class='boxy' id='boxy_four'></div><br>"
+  dom_mask.innerHTML += "<div class='boxy' id='boxy_one'></div><div class='boxy' id='boxy_two'></div><div class='boxy' id='boxy_three'></div><div class='boxy' id='boxy_four'></div>";
   if (ornt === "portrait") document.getElementById("boxy_one").innerHTML = "<br><div><u><strong>Map Opacity</strong></u></div><br><div class='slideContainer'><input type='range' step='0.1' min='0' max='1' value='" + opacity + "' id='opacitySlider' class='slider'></div><br><div>(This option allows you to see the map through the console window)</div><br>";
-  document.getElementById("boxy_two").innerHTML += "<br><div><u><strong>Font Size</strong></u></div><br><div class='slideContainer'><input type='range' step='0.1' min='0.8' max='1.8' value='" + fontSize + "' id='fontSizeSlider' class='slider'></div><br><div>(This option lets you change the size of text in the console)</div><br>";
+  document.getElementById("boxy_two").innerHTML += "<br><div><u><strong>Font Size</strong></u></div><br><div class='slideContainer'><input type='range' step='0.1' min='0.7' max='1.7' value='" + fontSize + "' id='fontSizeSlider' class='slider'></div><br><div>(This option lets you change the size of text in the console)</div><br>";
   document.getElementById("boxy_three").innerHTML += "<br><div><u><strong>Save/Load Game</strong></u></div><br>Choose a slot: &nbsp;<select></select><br><br>";
 
   function updateDropdown() {
