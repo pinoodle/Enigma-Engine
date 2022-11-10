@@ -1,4 +1,4 @@
-// Enigma Engine v2.3 by pinoodle@GitHub
+// Enigma Engine v2.4 by pinoodle@GitHub
 
 var header = function() {
 
@@ -848,7 +848,7 @@ function showSettings() {
   if (saveDisabled === false) { document.getElementById("boxy_three").innerHTML += "<div class='button' id='saveButton' style='margin: 0 auto; width: 9em;'>SAVE GAME</div><br>"; }
   document.getElementById("boxy_three").innerHTML += "<div class='button' id='loadButton' style='margin: 0 auto; width: 9em;'>LOAD GAME</div><br><div>(Note that progress in the current room is not saved)</div><br>";
   document.getElementById("boxy_four").innerHTML += "<br><div><u><strong>Clear Console</strong></u></div><br>";
-  document.getElementById("boxy_four").innerHTML += "<div class='button' id='clearButton' style='margin: 0 auto; width: 13em;'>CLEAR CONSOLE</div><br><div>(This option lets you clear the console of all text)</div><br>";
+  document.getElementById("boxy_four").innerHTML += "<div class='button' id='clearButton' style='margin: 0 auto; width: 13em;'>CLEAR CONSOLE</div><br><div>(Use this if the game starts getting sluggish)</div><br>";
   dom_mask.innerHTML += "<div id='statusReport'></div>";
   if (saveDisabled === false) { document.getElementById("saveButton").addEventListener("click", function() { document.getElementById("statusReport").innerHTML = saveGame(document.getElementsByTagName("SELECT")[0].value); updateDropdown(); }); }
   document.getElementById("loadButton").addEventListener("click", function() { document.getElementById("statusReport").innerHTML = loadGame(document.getElementsByTagName("SELECT")[0].value); });
