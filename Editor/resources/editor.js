@@ -963,7 +963,7 @@ function exportScript(downloadResult) {
 
   script = beautifier.js(script);
   var data = "data:text/javascript;charset=utf-8," + encodeURIComponent(script);
-  if (downloadResult) invisibleDownloader(data, 'gamescript.dat');
+  if (downloadResult) invisibleDownloader(data, 'gamescript.js');
   return script;
 
 }
