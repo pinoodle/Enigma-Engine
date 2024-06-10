@@ -1,4 +1,4 @@
-// Enigma Engine v2.4 by pinoodle@GitHub
+// Enigma Engine v3.0 by pinoodle@GitHub
 
 var header = function() {
 
@@ -7,7 +7,7 @@ var header = function() {
 var fakeUp; var fakeDown; var fakeNorth; var fakeSouth; var fakeEast; var fakeWest; var fakeNortheast; var fakeNorthwest; var fakeSoutheast; var fakeSouthwest;
 var interaction = 1;
 var intDirs = [];
-var kolorek = "#6c3300";
+var kolorek = "#5D0000";
 var intFakeDirs = [];
 var ctrl = 0;
 var timer;
