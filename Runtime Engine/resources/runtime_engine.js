@@ -870,6 +870,8 @@ function removeStat(string) {
 }
 
 function teleport(coords) {
+  enableInteraction();
+
   var newCoords_array = coords.split(",");
 
   for (var i = 0; i < newCoords_array.length; i++) {
@@ -885,7 +887,7 @@ function teleport(coords) {
   room = newCoords_array[0] + "," + newCoords_array[1] + "," + room.split(",")[2];
 
   // Change z location if necessary
-  if (newCoords_array[2] !== room.split(",")[2]) {
+  if (newCoords_array[2] != room.split(",")[2]) {
     var operation = newCoords_array[2] - room.split(",")[2];
     changeMapLayer(operation);
     carryOn("don't remove");
@@ -1278,7 +1280,9 @@ function isInRoom(name) {
 }
 
 function refreshRoom() {
+  var skfjghkjsfngjk = dom_scene.innerHTML;
   teleport(room);
+  dom_scene.innerHTML = skfjghkjsfngjk;
 }
 
 function addFakeExits(txt, funn) {

@@ -29,6 +29,7 @@ html, body {
   border-style: solid;
   border-color: #C1C1C1;
   font-size: 1em;
+  scrollbar-color: #C1C1C1 #000;
 }
 #codeViewContainer {
   position: relative;
