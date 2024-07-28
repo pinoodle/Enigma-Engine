@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enigma Engine v3.1</title>
+    <title>Enigma Engine v3.2</title>
     <link rel="icon" type="image/x-icon" href="resources/icon.ico">
     <script src="resources/jquery-3.4.1.min.js"></script>
     <script src="resources/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="resources/jquery-ui-1.12.1.custom/jquery-ui.min.css" type="text/css">
     <script src="resources/esprima-4-0-1.js"></script>
-    <script src="resources/showdown-1-9-1.min.js"></script>
+    <script src="resources/markdown.js"></script>
     <script src="resources/js-beautify-1-10-3.min.js"></script>
     <script src="resources/ace/src-min/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="resources/ace/src-min/theme-merbivore.js" type="text/javascript" charset="utf-8"></script>
@@ -223,7 +223,7 @@
 
     <!-- PRINT DIALOG -->
     <div id="printDialog" title="Print text...">
-      <p>Enter below the text you would like to print. Markdown is fully supported - so you can use * for italics, ** for bold text etc. If you wish to include the value of a variable in your text, use ${ }, e.g. ${pl.hp}</p>
+      <p>You can use * for italics, ** for bold, and _ for underline. You can use # to create a heading, but headings must be in their own separate print() statements. If you wish to include the value of a variable in your text, use ${ }, e.g. ${pl.hp}</p>
       <textarea id="printTextarea" class="pureText"></textarea>
     </div>
     <!-- END OF DIALOG -->
