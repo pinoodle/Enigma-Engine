@@ -1,6 +1,5 @@
 var textEditor;
 var fontSize = 1;
-var converter = new showdown.Converter({ noHeaderId : true, simpleLineBreaks : true, backslashEscapesHTMLTags : true, literalMidWordUnderscores : true });
 var ಠ_ಠ = 0;
 var gridSize = 1001;
 var mapScaler = 1;
@@ -193,9 +192,7 @@ window.onload = function() {
       command = command.replace(quoteUsed, '');
       var index = command.lastIndexOf(quoteUsed);
       command = command.substr(0, index);
-
-      command = '<p>' + command + '</p>';
-      command = converter.makeMarkdown(command);
+      command = converterMD(command);
       command = command.replace(/<br>/g, '').replace(/\n\n/g, '\n');
 
       comingFromEdit = true;
@@ -297,9 +294,8 @@ function addToEditor(string) {
 
 function washUserInput(element, liquifyQuotes) {
   var dummy = $(element)[0].value.trim().replace(/\n/g, '<br>');
-  dummy = converter.makeHtml(dummy);
+  dummy = converterHTML(dummy);
   if (liquifyQuotes === true) dummy = dummy.replace(/\"/g, '&quot;');
-  dummy = dummy.substr(3, dummy.length - 7);
   dummy = "`" + dummy + "`";
   return dummy;
 }
