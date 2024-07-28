@@ -2,7 +2,7 @@
 A text adventure game engine created as a simple, cross-platform, lightweight alternative to Quest (http://textadventures.co.uk/quest).
 
 ## How to Run the Program
-You can use the online version of the editor here: https://media.textadventures.co.uk/games/fflizpVH0k2juFTlK2OTgA/index.html
+You can use the online version of the editor here: https://media.textadventures.co.uk/games/rhzYYseOJkGVw4TeoSYvcQ/EE%20v3.2/index.html
 
 Your game data is not stored in the cloud and never leaves your PC - once loaded, the editor runs fully offline on your PC.
 
