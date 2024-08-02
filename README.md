@@ -1,4 +1,4 @@
-# Enigma Engine v3.2
+# Enigma Engine v3.3
 A text adventure game engine created as a simple, cross-platform, lightweight alternative to Quest (http://textadventures.co.uk/quest).
 
 ## How to Run the Program
