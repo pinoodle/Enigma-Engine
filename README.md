@@ -1,15 +1,19 @@
-# Enigma Engine v3.3
+# Enigma Engine v3.4
 A text adventure game engine created as a simple, cross-platform, lightweight alternative to Quest (http://textadventures.co.uk/quest).
 
 ## How to Run the Program
-You can use the online version of the editor here: https://media.textadventures.co.uk/games/rhzYYseOJkGVw4TeoSYvcQ/index.html
+You can use the online version of the Editor here: https://pinoodle.github.io/Enigma-Engine/
 
-Your game data is not stored in the cloud and never leaves your PC - once loaded, the editor runs fully offline on your PC.
+The Editor can also be installed as a PWA on Chromium-based browsers, which works even when offline.
 
-Alternatively, download and extract the .zip file of this repository and open the file "Editor/Enigma Engine.html" in your favourite browser.
+Your game data is not stored in the cloud and never leaves your PC - once loaded, the Editor runs fully offline on your PC.
+
+Alternatively, download and extract the .zip file of this repository and open the file "index.html" file in your favourite browser to load the Editor.
 
 ## How to Export the Game
-Once you've finished your game in the Editor, you can click on "Export Gamescript", which will generate a "gamescript.js" file for you. Drag-and-drop this into the "resources" folder within the "Runtime Engine" folder of this repository, and click on "index.html" to play the game!
+Once you've finished your game in the Editor, you can click on "Export Gamescript", which will generate a "gamescript.js" file for you.
+
+Now xopy and paste the "Runtime Engine" folder anywhere you like and rename it to anything you like (e.g. "Forest Adventure"). Then you'd drag-and-drop the "gamescript.js" file into "Forest Adventure/resources", and click on "index.html" to play the game!
 
 ## Manual
 Video tutorials coming soon!
