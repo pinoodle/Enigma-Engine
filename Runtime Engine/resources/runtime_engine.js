@@ -35,22 +35,15 @@ var mapWidth;
 var mapCenterY;
 var mapCenterX;
 
-var opacity = 0.2;
+var opacity = 1;
 var fontSize = 1.2;
 
 var hypcntr = 0;
-var ornt = "";
+var ornt = "landscape";
 var saveSlots = [];
 
 function onGameLoad() {
 
-  if (window.innerHeight > window.innerWidth) {
-    ornt = "portrait";
-    fontSize = 1.0;
-  }
-  else {
-    ornt = "landscape";
-  }
 
   if (localStorage.getItem("fontSize") !== null) fontSize = localStorage.getItem("fontSize");
   if (localStorage.getItem("saveSlots") !== null) saveSlots = JSON.parse(localStorage.getItem("saveSlots"));
@@ -80,40 +73,9 @@ function onGameLoad() {
 
   dom_scene.style.fontSize = fontSize + "em";
 
-  // Bottom Navigation Bar && orientation setup
-  if (ornt === "portrait") {
-    if (localStorage.getItem("opacity") !== null) opacity = localStorage.getItem("opacity");
-    dom_map.style.opacity = opacity;
-
-    game_btn.classList.toggle("active_bottom_btn");
-    dom_map.style.opacity = opacity;
-    dom_map.style.pointerEvents = "none";
-    game_btn.addEventListener("click", function() {switchView("game")});
-  }
-  else {
-    document.documentElement.style.maxWidth = "1500px";
-    document.getElementById("container").style.width = "calc(40% + 4px)";
-    document.getElementById("container").style.left = "calc(60% - 4px)";
-    var newPanel = document.createElement("DIV");
-    newPanel.id = "newPanel";
-    document.body.appendChild(newPanel);
-    newPanel.appendChild(dom_scene);
-    dom_scene.style.height = "calc(100% - 16px)";
-    dom_scene.style.width = "calc(100% - 8px)";
-    dom_scene.style.borderBottomLeftRadius = "16px";
-    dom_scene.style.borderTopLeftRadius = "16px";
-    dom_map.style.opacity = 1;
-    document.getElementById("shadow").style.borderTopLeftRadius = 0;
-    document.getElementById("shadow").style.borderBottomLeftRadius = 0;
-    dom_map.style.backgroundColor = "#282828";
-    map_btn.classList.toggle("active_bottom_btn");
-    dom_map.style.opacity = 1;
-    game_btn.style.backgroundColor = "#864500";
-    game_btn.style.textDecoration = "none";
-    game_btn.style.color = "#FFF";
-    game_btn.style.cursor = "not-allowed";
-    game_btn.style.pointerEvents = "all !important";
-  }
+  // Desktop layout setup
+  document.documentElement.style.maxWidth = "1500px";
+  map_btn.classList.add("active_bottom_btn");
 
   map_btn.addEventListener("click", function() {switchView("map")});
   stats_btn.addEventListener("click", function() {switchView("stats")});
@@ -128,10 +90,6 @@ function onGameLoad() {
     };
 
     if (string === "game" && !(game_btn.classList.contains("active_bottom_btn"))) {
-      if (document.getElementById("opacitySlider") !== null) {
-        opacity = document.getElementById("opacitySlider").value;
-        localStorage.setItem("opacity",opacity);
-      }
       game_btn.classList.toggle("active_bottom_btn");
       dom_map.style.backgroundColor = "transparent";
       dom_map.style.opacity = opacity;
@@ -830,7 +788,7 @@ function showSettings() {
   dom_mask.style.textAlign = "center";
   dom_mask.innerHTML = "<div class='hedda'>SETTINGS</div>";
   dom_mask.innerHTML += "<div class='boxy' id='boxy_one'></div><div class='boxy' id='boxy_two'></div><div class='boxy' id='boxy_three'></div><div class='boxy' id='boxy_four'></div>";
-  if (ornt === "portrait") document.getElementById("boxy_one").innerHTML = "<br><div><u><strong>Map Opacity</strong></u></div><br><div class='slideContainer'><input type='range' step='0.1' min='0' max='1' value='" + opacity + "' id='opacitySlider' class='slider'></div><br><div>(This option allows you to see the map through the console window)</div><br>";
+  // Map opacity option removed for desktop layout
   document.getElementById("boxy_two").innerHTML += "<br><div><u><strong>Font Size</strong></u></div><br><div class='slideContainer'><input type='range' step='0.1' min='0.7' max='1.7' value='" + fontSize + "' id='fontSizeSlider' class='slider'></div><br><div>(This option lets you change the size of text in the console)</div><br>";
   document.getElementById("boxy_three").innerHTML += "<br><div><u><strong>Save/Load Game</strong></u></div><br>Choose a slot: &nbsp;<select></select><br><br>";
 
