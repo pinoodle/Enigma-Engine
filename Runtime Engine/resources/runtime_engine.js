@@ -360,11 +360,11 @@ function onGameLoad() {
         if (document.getElementById("stats_btn").classList.contains("active_bottom_btn") || document.getElementById("settings_btn").classList.contains("active_bottom_btn")) dom_scene.click();
         document.getElementById("inventory_btn").click();
       }
-    }
+    } */
 
   });
 
-  var ctrlFix = setTimeout(function() { ctrl++; }, 1000);*/
+  // var ctrlFix = setTimeout(function() { ctrl++; }, 1000);
 
   try { definitions[room](); } catch(error) { print(error); }
   changeColor(kolorek);
