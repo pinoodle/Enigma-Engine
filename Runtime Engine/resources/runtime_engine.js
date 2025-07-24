@@ -1,4 +1,4 @@
-// Enigma Engine v3.0 by pinoodle@GitHub
+// Noodle Engine v4.0
 
 var header = function() {
 
@@ -912,6 +912,7 @@ function teleport(coords) {
 
 function hyperlink(text, axn) {
   // var stringifiedFunction = String(axn).replace(/'/g,"\\'").replace(/"/g, "`");
+  nukeHyperlinks();
   eval("window.hyperlink_function_" + hypcntr + " = " + axn);
   hypcntr++;
   return "<a href=\"javascript:void(0)\" class=\"activeHyperlink\" onclick=\"hyperlinkClick(this, `" + text + "`, " + "hyperlink_function_" + (hypcntr - 1) + ")\">" + text + "</a>";
