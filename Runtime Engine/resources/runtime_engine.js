@@ -912,7 +912,6 @@ function teleport(coords) {
 
 function hyperlink(text, axn) {
   // var stringifiedFunction = String(axn).replace(/'/g,"\\'").replace(/"/g, "`");
-  nukeHyperlinks();
   eval("window.hyperlink_function_" + hypcntr + " = " + axn);
   hypcntr++;
   return "<a href=\"javascript:void(0)\" class=\"activeHyperlink\" onclick=\"hyperlinkClick(this, `" + text + "`, " + "hyperlink_function_" + (hypcntr - 1) + ")\">" + text + "</a>";
@@ -920,6 +919,7 @@ function hyperlink(text, axn) {
 
 function hyperlinkClick(element, text, axn) {
   if (element.classList.contains("activeHyperlink")) {
+    nukeHyperlinks();
     dom_scene.innerHTML += "<span class='command'> &gt " + text.toUpperCase() + "</span><br />";
     dom_scene.scrollTo(0, dom_scene.scrollHeight);
     axn();
