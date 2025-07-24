@@ -1,4 +1,4 @@
-const CACHE_NAME = 'enigma-engine-cache-v1';
+const CACHE_NAME = 'noodle-engine-cache-v1';
 const urlsToCache = [
   '',
   'index.html',
