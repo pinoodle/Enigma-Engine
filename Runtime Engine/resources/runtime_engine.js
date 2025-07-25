@@ -164,25 +164,29 @@ function onGameLoad() {
 
   // Code to make the SURROUNDINGS and INVENTORY buttons bring up the Side Panel.
   document.getElementById("surroundings_btn").addEventListener("click", function() {
-    this.classList.toggle("buttonActive");
-    if (this.classList.contains("buttonActive")) {
-      dom_sidePanel.innerHTML = "";
-      changeItemsInPanel(this);
-      dom_sidePanel.style.right = "0";
-      document.getElementById("inventory_btn").classList.remove("buttonActive");
-    } else {
-      dom_sidePanel.style.right = "-70%";
+    if (this.classList.contains("full")) {
+      this.classList.toggle("buttonActive");
+      if (this.classList.contains("buttonActive")) {
+        dom_sidePanel.innerHTML = "";
+        changeItemsInPanel(this);
+        dom_sidePanel.style.right = "0";
+        document.getElementById("inventory_btn").classList.remove("buttonActive");
+      } else {
+        dom_sidePanel.style.right = "-70%";
+      }
     }
   });
   document.getElementById("inventory_btn").addEventListener("click", function() {
-    this.classList.toggle("buttonActive");
-    if (this.classList.contains("buttonActive")) {
-      dom_sidePanel.innerHTML = "";
-      changeItemsInPanel(this);
-      dom_sidePanel.style.right = "0";
-      document.getElementById("surroundings_btn").classList.remove("buttonActive");
-    } else {
-      dom_sidePanel.style.right = "-70%";
+    if (this.classList.contains("full")) {
+      this.classList.toggle("buttonActive");
+      if (this.classList.contains("buttonActive")) {
+        dom_sidePanel.innerHTML = "";
+        changeItemsInPanel(this);
+        dom_sidePanel.style.right = "0";
+        document.getElementById("surroundings_btn").classList.remove("buttonActive");
+      } else {
+        dom_sidePanel.style.right = "-70%";
+      }
     }
   });
 
@@ -441,6 +445,7 @@ function drawLines() {
 function removeArrowColorings(item,delStatus) {
 
   surroundings_btn.innerHTML = 'ROOM <b>(0)</b>';
+  surroundings_btn.classList.remove("full");
 
   north_arrow.classList.remove("directionAvailable");
   south_arrow.classList.remove("directionAvailable");
@@ -464,7 +469,7 @@ function removeArrowColorings(item,delStatus) {
   removeFakeExits([north, south, east, west, northwest, northeast, southwest, southeast, up, down]);
   autoSave();
   header();
-  try { definitions[room](); } catch(error) { print(error); }
+  try { definitions[room](); } catch(error) { print(`<b>ERROR: Unable to load script for room (${room}).</b>`); }
 
   if (delStatus !== "don't remove") {
     var blobbo = document.getElementById("blob");
@@ -554,6 +559,7 @@ function addRoomObject(string) {
     var currentCount = parseInt(surroundings_btn.innerHTML.replace('ROOM <b>(','').replace(')</b>',''));
     currentCount++;
     surroundings_btn.innerHTML = 'ROOM <b>(' + currentCount + ')</b>';
+    surroundings_btn.classList.add("full");
   }
 }
 
@@ -603,6 +609,7 @@ function removeRoomObject(name) {
       var currentCount = parseInt(surroundings_btn.innerHTML.replace('ROOM <b>(','').replace(')</b>',''));
       currentCount--;
       surroundings_btn.innerHTML = 'ROOM <b>(' + currentCount + ')</b>';
+      if (currentCount === 0) surroundings_btn.classList.remove("full");
     }
     else if (roomObjects[i].name === name && roomObjects[i].count !== 1) {
       roomObjects[i].count--;
@@ -610,9 +617,6 @@ function removeRoomObject(name) {
   }
 }
 
-
-
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!The code below is IDENTICAL to the one for Objects - we jus replaced all instances of the word "ROOM" with "INVENTORY"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 function addInventoryObject(string) {
   var cntr = 0;
   for (var i = 0; i < inventoryObjects.length; i++) {
@@ -627,6 +631,7 @@ function addInventoryObject(string) {
     var currentCount = parseInt(inventory_btn.innerHTML.replace('INVENTORY <b>(','').replace(')</b>',''));
     currentCount++;
     inventory_btn.innerHTML = 'INVENTORY <b>(' + currentCount + ')</b>';
+    inventory_btn.classList.add("full");
   }
 }
 
@@ -675,15 +680,13 @@ function removeInventoryObject(name) {
       var currentCount = parseInt(inventory_btn.innerHTML.replace('INVENTORY <b>(','').replace(')</b>',''));
       currentCount--;
       inventory_btn.innerHTML = 'INVENTORY <b>(' + currentCount + ')</b>';
+      if (currentCount === 0) inventory_btn.classList.remove("full");
     }
     else if (inventoryObjects[i].name === name && inventoryObjects[i].count !== 1) {
       inventoryObjects[i].count--;
     }
   }
 }
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  END OF IDENTICAL CODE BLOCK  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
 
 // The code below is to create collapsible lists in the Side Panel - for interacting with people, objects and inventory.
 function createCollapsibleListeners() {
@@ -830,10 +833,10 @@ function showSettings() {
 
   updateDropdown();
 
-  if (saveDisabled === false) { document.getElementById("boxy_three").innerHTML += "<div class='button' id='saveButton' style='margin: 0 auto; width: 9em;'>SAVE GAME</div><br>"; }
-  document.getElementById("boxy_three").innerHTML += "<div class='button' id='loadButton' style='margin: 0 auto; width: 9em;'>LOAD GAME</div><br><div>(Note that progress in the current room is not saved)</div><br>";
+  if (saveDisabled === false) { document.getElementById("boxy_three").innerHTML += "<div class='button full' id='saveButton' style='margin: 0 auto; width: 9em;'>SAVE GAME</div><br>"; }
+  document.getElementById("boxy_three").innerHTML += "<div class='button full' id='loadButton' style='margin: 0 auto; width: 9em;'>LOAD GAME</div><br><div>(Note that progress in the current room is not saved)</div><br>";
   document.getElementById("boxy_four").innerHTML += "<br><div><u><strong>Clear Console</strong></u></div><br>";
-  document.getElementById("boxy_four").innerHTML += "<div class='button' id='clearButton' style='margin: 0 auto; width: 13em;'>CLEAR CONSOLE</div><br><div>(Use this if the game starts getting sluggish)</div><br>";
+  document.getElementById("boxy_four").innerHTML += "<div class='button full' id='clearButton' style='margin: 0 auto; width: 13em;'>CLEAR CONSOLE</div><br><div>(Use this if the game starts getting sluggish)</div><br>";
   dom_mask.innerHTML += "<div id='statusReport'></div>";
   if (saveDisabled === false) { document.getElementById("saveButton").addEventListener("click", function() { document.getElementById("statusReport").innerHTML = saveGame(document.getElementsByTagName("SELECT")[0].value); updateDropdown(); }); }
   document.getElementById("loadButton").addEventListener("click", function() { document.getElementById("statusReport").innerHTML = loadGame(document.getElementsByTagName("SELECT")[0].value); });
@@ -1123,11 +1126,13 @@ function enableSaving() {
 function clearInventory() {
   inventory_btn.innerHTML = 'INVENTORY <b>(0)</b>';
   inventoryObjects = [];
+  inventory_btn.classList.remove("full");
 }
 
 function clearRoom() {
   surroundings_btn.innerHTML = 'ROOM <b>(0)</b>';
   roomObjects = [];
+  surroundings_btn.classList.remove("full");
 }
 
 function timerFix() {
