@@ -949,13 +949,9 @@ function exportScript(downloadResult) {
   if (typeof roomScripts['Variables'] !== 'undefined') script += roomScripts['Variables'].trim();
   script += "\n};\n\n";
 
-  script += "definitions['0,0,0'] = function() {\n";
-  if (typeof roomScripts['Variables'] !== 'undefined') script += `if (sl583bfl43484048gheflgn453406) { } else { definitions['vars'](); var sl583bfl43484048gheflgn453406 = true; }`;
-  script += "\n\n";
-  if (typeof roomScripts[squares[0]] !== 'undefined') script += roomScripts[squares[0]].trim();
-  script += "\n};\n\n";
+  script += "definitions['vars']();\n\n";
 
-  for (var i = 1; i < length; i++) {
+  for (var i = 0; i < length; i++) {
     script += "definitions['" + squares[i] + "'] = function() {\n";
     if (typeof roomScripts[squares[i]] !== 'undefined') script += roomScripts[squares[i]].trim();
     script += "\n};\n\n";
@@ -967,17 +963,3 @@ function exportScript(downloadResult) {
   return script;
 
 }
-
-/* function exportScript(downloadResult) {
-  var script = '';
-  var length = squares.length;
-  for (var i = 0; i < length; i++) {
-    script += "definitions['" + squares[i] + "'] = function() {\n";
-    if (typeof roomScripts[squares[i]] !== 'undefined') script += roomScripts[squares[i]].trim();
-    script += "\n}\n\n"
-  }
-  script = beautifier.js(script);
-  var data = "data:text/javascript;charset=utf-8," + encodeURIComponent(script);
-  if (downloadResult) invisibleDownloader(data, 'gamescript.js');
-  return script;
-} */
