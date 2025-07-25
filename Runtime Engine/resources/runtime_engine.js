@@ -351,7 +351,7 @@ function onGameLoad() {
 
   });
 
-  try { definitions[room](); } catch(error) { print(error); }
+  try { definitions[room](); } catch(error) { print(`<b>ERROR: Unable to load script for room (${room}).</b>`); }
   changeColor(kolorek);
   document.getElementById("loadingMask").style.display = "none";
 

@@ -945,16 +945,20 @@ function exportScript(downloadResult) {
   var script = '';
   var length = squares.length;
 
-  script += "definitions['" + squares[0] + "'] = function() {\n";
+  script += "definitions['vars'] = function() {\n";
   if (typeof roomScripts['Variables'] !== 'undefined') script += roomScripts['Variables'].trim();
+  script += "\n};\n\n";
+
+  script += "definitions['0,0,0'] = function() {\n";
+  if (typeof roomScripts['Variables'] !== 'undefined') script += `if (sl583bfl43484048gheflgn453406) { } else { definitions['vars'](); var sl583bfl43484048gheflgn453406 = true; }`;
   script += "\n\n";
   if (typeof roomScripts[squares[0]] !== 'undefined') script += roomScripts[squares[0]].trim();
-  script += "\n}\n\n";
+  script += "\n};\n\n";
 
   for (var i = 1; i < length; i++) {
     script += "definitions['" + squares[i] + "'] = function() {\n";
     if (typeof roomScripts[squares[i]] !== 'undefined') script += roomScripts[squares[i]].trim();
-    script += "\n}\n\n";
+    script += "\n};\n\n";
   }
 
   script = beautifier.js(script);
