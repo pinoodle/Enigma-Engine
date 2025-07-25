@@ -70,7 +70,7 @@ input:focus, input:active, textarea:focus, textarea:active, input:hover, textare
 }
 #printTextarea {
   width: 100%;
-  height: 600px;
+  height: 400px;
   resize: none;
   background-color: #222;
   border-style: solid;
