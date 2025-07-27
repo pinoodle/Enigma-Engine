@@ -1,4 +1,4 @@
-# Noodle Engine v4.0
+# Enigma Engine v4.0
 A text adventure game engine created as a simple, cross-platform, lightweight alternative to Quest (http://textadventures.co.uk/quest).
 
 v4.0 is currently under development! It aims to finalize the engine into a clean, finished product.
