@@ -1,4 +1,4 @@
-// Noodle Engine v4.0
+// Enigma Engine v4.0
 
 var header = function() {
 
